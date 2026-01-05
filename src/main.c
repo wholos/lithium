@@ -2,32 +2,51 @@
 #include<string.h>
 #include<stdlib.h>
 #include"colorlib.h"
-const char *repository="https://raw.githubusercontent.com/wholos/HronyPackages/main/binary/";
+const char *repository="https://raw.githubusercontent.com/wholos/LithiumPackages/main/binary/";
 int instl(int argc,char *argv[]){
+    char yorn;
     if(argc < 3){
         printf("use lithium load <pkg>\n");
         return 0;
     }
-    for(int i=2; i<argc;i++){
-        char ttyi[256];
-        char chmd[256];
-        printf(GREEN"lithium: installing %s\n"reset, argv[i]);
-        snprintf(ttyi,sizeof(ttyi),"wget -q --directory=/bin/ %s%s",repository,argv[i]);
-        snprintf(chmd,sizeof(chmd),"chmod +x /bin/%s",argv[i]);
-        system(ttyi);
-        system(chmd);
+    printf("Confirm download package(s)? [y/n]: ");
+    scanf(" %c", &yorn);
+    if(yorn == 'y'){
+        for(int i=2; i<argc;i++){
+            char ttyi[256];
+            char chmd[256];
+            printf(GREEN"lithium: installing %s\n"reset,argv[i]);
+            snprintf(ttyi,sizeof(ttyi),"wget -q --directory=/bin/ %s%s",repository,argv[i]);
+            snprintf(chmd,sizeof(chmd),"chmod +x /bin/%s\n",argv[i]);
+            system(ttyi);
+            system(chmd);
+            return 0;
+        }
+    }
+    if(yorn == 'n'){
+        printf("Aborting.\n");
         return 0;
     }
 }
 int rmv(int argc,char *argv[]){
+    char yorn;
     if(argc < 3){
         printf("use lithium kill <pkg>\n");
         return 0;
     }
-    for(int i=2; i<argc;i++){
-        char ttyr[256];
-        snprintf(ttyr,sizeof(ttyr),"rm -rf /bin/%s",argv[i]);
-        system(ttyr);
+    printf("Confirm remove package(s)? [y/n]: ");
+    scanf(" %c", &yorn);
+    if(yorn == 'y'){
+        for(int i=2; i<argc;i++){
+            char ttyr[256];
+            printf(GREEN"lithium: removing %s\n"reset,argv[i]);
+            snprintf(ttyr,sizeof(ttyr),"rm -rf /bin/%s",argv[i]);
+            system(ttyr);
+            return 0;
+        }
+    }
+    if(yorn == 'n'){
+        printf("Aborting.\n");
         return 0;
     }
 }
