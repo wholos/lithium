@@ -1,0 +1,2 @@
+# lithium
+minimalistic package manager
