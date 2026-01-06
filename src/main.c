@@ -1,8 +1,9 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include<libconfig.h>
 #include"colorlib.h"
-const char *repository="https://raw.githubusercontent.com/wholos/LithiumPackages/main/binary/";
+const char *repository;
 int instl(int argc,char *argv[]){
     char yorn;
     if(argc < 3){
@@ -51,6 +52,10 @@ int rmv(int argc,char *argv[]){
     }
 }
 int main(int argc,char *argv[]){
+    config_t confg;
+    config_init(&confg);
+    config_read_file(&confg,"/etc/lithium.conf");
+    config_lookup_string(&confg,"repo",&repository);
     if(argc < 2) {
         printf("lithium: use --help for documentation if use\n");
         return 0;
