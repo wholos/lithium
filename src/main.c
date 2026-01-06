@@ -5,6 +5,11 @@
 #include<libconfig.h>
 #include"colorlib.h"
 const char *repository;
+const char *logotype=R"(
+| (_) |_| |_ (_)_  _ _ __  
+| | |  _| ' \| | || | '  \ 
+|_|_|\__|_||_|_|\_,_|_|_|_|
+)";
 int instl(int argc,char *argv[]){
     char yorn;
     if(argc < 3){
@@ -81,9 +86,16 @@ int main(int argc,char *argv[]){
     }
     if(strcmp(argv[1],"--help")==0){
         printf("lithium.\n");
+        printf("version: print version lithium package manager (--version)\n");
         printf("load: install package to /bin/ directory\n");
         printf("kill: remove package from /bin/ directory\n");
         printf("upd: update packages from /bin/ directory\n");
+        return 0;
+    }
+    if(strcmp(argv[1],"--version")==0){
+        printf(BLUE"LITHIUM"reset);
+        printf(logotype);
+        printf("lithium version - 0.2\n");
         return 0;
     }
     if(strcmp(argv[1],"load")==0){
