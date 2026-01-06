@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include<unistd.h>
 #include<libconfig.h>
 #include"colorlib.h"
 const char *repository;
@@ -51,6 +52,24 @@ int rmv(int argc,char *argv[]){
         return 0;
     }
 }
+int upd(int argc, char *argv[]){
+    char yorn;
+    printf("Confirm update packages? [y/n] ");
+    scanf(" %c", &yorn);
+    if(yorn == 'y'){
+        printf(GREEN"lithium: updating package manager\n"reset);
+        system("rm /bin/lithium");
+        sleep(1);
+        system("wget -q --directory=/bin/ https://raw.githubusercontent.com/wholos/LithiumPackages/main/lithium/lithium");
+        sleep(1);
+        system("chmod +x /bin/lithium");
+        return 0;
+    }
+    if(yorn == 'n'){
+        printf("Aborting.\n");
+        return 0;
+    }
+}
 int main(int argc,char *argv[]){
     config_t confg;
     config_init(&confg);
@@ -64,6 +83,7 @@ int main(int argc,char *argv[]){
         printf("lithium.\n");
         printf("load: install package to /bin/ directory\n");
         printf("kill: remove package from /bin/ directory\n");
+        printf("upd: update packages from /bin/ directory\n");
         return 0;
     }
     if(strcmp(argv[1],"load")==0){
@@ -72,6 +92,10 @@ int main(int argc,char *argv[]){
     }
     if(strcmp(argv[1],"kill")==0){
         rmv(argc,argv);
+        return 0;
+    }
+    if(strcmp(argv[1],"upd")==0){
+        upd(argc,argv);
         return 0;
     }
     printf("lithium: argument %s not found\n",argv[1]);
