@@ -3,6 +3,7 @@
 ``` bash
 gcc
 wget
+libconfig
 make (optional)
 just (optional
 ```
