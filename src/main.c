@@ -4,6 +4,7 @@
 #include<unistd.h>
 #include<libconfig.h>
 #include"colorlib.h"
+const char *dir;
 const char *repository;
 const char *logotype=R"(
 | (_) |_| |_ (_)_  _ _ __  
@@ -23,8 +24,8 @@ int instl(int argc,char *argv[]){
             char ttyi[256];
             char chmd[256];
             printf(GREEN"lithium: installing %s\n"reset,argv[i]);
-            snprintf(ttyi,sizeof(ttyi),"wget -q --directory=/bin/ %s%s",repository,argv[i]);
-            snprintf(chmd,sizeof(chmd),"chmod +x /bin/%s\n",argv[i]);
+            snprintf(ttyi,sizeof(ttyi),"wget -q --directory=%s %s%s",dir,repository,argv[i]);
+            snprintf(chmd,sizeof(chmd),"chmod +x %s%s\n",dir,argv[i]);
             system(ttyi);
             system(chmd);
             return 0;
@@ -47,7 +48,7 @@ int rmv(int argc,char *argv[]){
         for(int i=2; i<argc;i++){
             char ttyr[256];
             printf(GREEN"lithium: removing %s\n"reset,argv[i]);
-            snprintf(ttyr,sizeof(ttyr),"rm -rf /bin/%s",argv[i]);
+            snprintf(ttyr,sizeof(ttyr),"rm -rf %s%s",dir,argv[i]);
             system(ttyr);
             return 0;
         }
@@ -80,6 +81,7 @@ int main(int argc,char *argv[]){
     config_init(&confg);
     config_read_file(&confg,"/etc/lithium.conf");
     config_lookup_string(&confg,"repo",&repository);
+    config_lookup_string(&confg,"dir",&dir);
     if(argc < 2) {
         printf("lithium: use --help for documentation if use\n");
         return 0;
@@ -95,7 +97,7 @@ int main(int argc,char *argv[]){
     if(strcmp(argv[1],"--version")==0){
         printf(BLUE"LITHIUM"reset);
         printf(logotype);
-        printf("lithium version - 0.2\n");
+        printf("lithium version - 0.3\n");
         return 0;
     }
     if(strcmp(argv[1],"load")==0){
