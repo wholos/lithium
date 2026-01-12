@@ -23,7 +23,7 @@ int instl(int argc,char *argv[]){
         for(int i=2; i<argc;i++){
             char ttyi[256];
             char chmd[256];
-            printf(GREEN"lithium: installing %s\n"reset,argv[i]);
+            printf(GREEN"lithium: installing \x1b[0m %s\n",argv[i]);
             snprintf(ttyi,sizeof(ttyi),"wget -q --directory=%s %s%s",dir,repository,argv[i]);
             snprintf(chmd,sizeof(chmd),"chmod +x %s%s\n",dir,argv[i]);
             system(ttyi);
@@ -47,7 +47,7 @@ int rmv(int argc,char *argv[]){
     if(yorn == 'y'){
         for(int i=2; i<argc;i++){
             char ttyr[256];
-            printf(GREEN"lithium: removing %s\n"reset,argv[i]);
+            printf(GREEN"lithium: removing \x1b[0m %s\n",argv[i]);
             snprintf(ttyr,sizeof(ttyr),"rm -rf %s%s",dir,argv[i]);
             system(ttyr);
             return 0;
@@ -97,7 +97,7 @@ int main(int argc,char *argv[]){
     if(strcmp(argv[1],"--version")==0){
         printf(BLUE"LITHIUM"reset);
         printf(logotype);
-        printf("lithium version - 0.3\n");
+        printf("lithium version - 0.4\n");
         return 0;
     }
     if(strcmp(argv[1],"load")==0){
