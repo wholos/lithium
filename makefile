@@ -3,3 +3,9 @@ all:
 
 clean:
         @rm lithium
+
+build: all
+
+install:
+        @echo 'Depend root!'
+        @cp lithium.conf /etc/ && cp lithium /bin/
